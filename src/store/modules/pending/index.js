@@ -6,17 +6,15 @@ export default {
   namespaced: true,
   state() {
     return {
-      stores: [],
-      store: {
-        uid : "",
-        customer : null,
-        name : "",
-        username : "",
-        password : "",
+      done: false,
+      pendings:[],
+      pending: {
+        uid: "",
+        customer: null,
+        store: null,
         installation_enabled : false,
         efood_enabled : false,
         wolt_enabled : false,
-        created : "",
         installation : {
           uid : "",
           live: {
@@ -67,6 +65,7 @@ export default {
           match: false,
           matcher : 0, // 0-> iserveu , 1->customer
           credentials : false,
+          credentials_info : "",
           vendor : false,
           connect : false,
         },
@@ -77,7 +76,17 @@ export default {
           match : false,
           matcher : 0, // 0-> iserveu , 1->customer, 2->wolt
           credentials : false,
+          credentials_info : ""
         }
+      },
+      stores: [],
+      store: {
+        uid : "",
+        customer : null,
+        name : "",
+        username : "",
+        password : "",
+        created : "",
       },
     };
   },

@@ -2,7 +2,7 @@ import axios from "axios"
 import router from "@/router";
 import store from "@/store";
 
-axios.defaults.baseURL = "https://79.129.44.71:10101/"
+axios.defaults.baseURL = "http://79.129.44.71:10100/"
 
 axios.interceptors.response.use(function(response) {
   return response

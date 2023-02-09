@@ -6,10 +6,12 @@ export default {
   namespaced: true,
   state() {
     return {
+      done: false,
       tickets: [],
       ticket: {
         uid : '',
         user : null,
+        customer : null,
         store : null,
         created : '',
         description : '',

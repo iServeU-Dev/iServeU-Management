@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import UserComp from '../components/UserComp.vue'
 import UserModal from '../components/users/UserModal.vue'
-import StoreComp from '../components/StoreComp.vue'
-import StoreModal from '../components/stores/StoreModal.vue'
+import PendingComp from '../components/PendingComp.vue'
+import PendingModal from '../components/pendings/PendingModal.vue'
 import CustomerComp from '../components/CustomerComp.vue'
 import CustomerModal from '../components/customers/CustomerModal.vue'
 import TicketingComp from '../components/TicketingComp.vue'
@@ -37,19 +37,19 @@ const routes = [
         ]
       },
       {
-        path: "/stores",
-        name: "store page",
-        component: StoreComp,
+        path: "/pendings",
+        name: "pending page",
+        component: PendingComp,
         children: [
           {
             path: "new",
-            name: "new store page",
-            component: StoreModal
+            name: "new pending page",
+            component: PendingModal
           },
           {
             path: "edit",
-            name: "edit store page",
-            component: StoreModal
+            name: "edit pending page",
+            component: PendingModal
           }
         ]
       },

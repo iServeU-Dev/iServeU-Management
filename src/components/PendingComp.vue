@@ -1,16 +1,16 @@
 <template>
     <section class="cont">
-        <controls-comp title="Εκκρεμότητες" path="ticketing" @searchFilter="setSearch"></controls-comp>
+        <controls-comp title="Εγκαταστάσεις" path="pendings" @searchFilter="setSearch"></controls-comp>
         <div class="filter">
-            <div>Διευθετημένα:</div>
+            <div>Ενεργά:</div>
             <div class="icon_cont">
                 <input type="checkbox" v-model="done" class="icon__check">
-                <svg-icon class="icon icon__active" name="active" v-if="done"></svg-icon>
-                <svg-icon class="icon icon__deactive" name="deactive" v-if="!done"></svg-icon>
+                <svg-icon class="icon icon__active" name="active" v-if="!done"></svg-icon>
+                <svg-icon class="icon icon__deactive" name="deactive" v-if="done"></svg-icon>
             </div>
         </div>
         <div class="table">
-            <ticket-entry v-for="ticket in tickets" :key="ticket.uid" :ticket="ticket"></ticket-entry>
+            <pending-entry v-for="pending in pendings" :key="pending.uid" :pending="pending"></pending-entry>
         </div>
         <router-view></router-view>
     </section>
@@ -18,7 +18,7 @@
 <script>
 import Fuse from 'fuse.js'
 import ControlsComp from './shared/ControlsComp.vue'
-import TicketEntry from './tickets/TicketEntry.vue'
+import PendingEntry from './pendings/PendingEntry.vue'
 import SvgIcon from './shared/SvgIcon.vue'
 export default {
     props:[
@@ -29,21 +29,16 @@ export default {
             searchFilter: ''
         }
     },
-    components: {
-        ControlsComp,
-        TicketEntry,
-        SvgIcon
-    }, 
     computed: {
-        tickets() {
-            const ticks = this.$store.getters["ticket/tickets"]
+        pendings() {
+            const strs = this.$store.getters["pending/pendings"]
             let returned= []
-            const fuse = new Fuse(ticks, {
+            const fuse = new Fuse(strs, {
                 keys: ['store.name', 'customer.name', 'customer.phone', 'customer.vat_number'],
                 useExtendedSearch: true
             })
             if (this.searchFilter === "") {
-                returned = ticks
+                returned = strs
             }else {
                 let fuseSearch = fuse.search("'"+this.searchFilter)
                 for (let i = 0; i < fuseSearch.length; i+=1) {
@@ -63,12 +58,17 @@ export default {
         },
         done: {
             get() {
-                return this.$store.getters["ticket/done"]
+                return this.$store.getters["pending/done"]
             },
             set(value) {
-                this.$store.dispatch("ticket/setDone", value)
+                this.$store.dispatch("pending/setDone", value)
             }
         }
+    },
+    components: {
+        ControlsComp,
+        PendingEntry,
+        SvgIcon
     },
     methods:{
         setSearch(value) {
@@ -77,19 +77,16 @@ export default {
     },
     mounted() {
         this.$store.dispatch("customer/loadCustomers")
-        this.$store.dispatch("pending/loadPendings")
-        if(this.$store.getters["ticket/done"] === false) {
-            this.$store.dispatch("ticket/loadTickets")
+        if(this.$store.getters["pending/done"] == false) {
+            this.$store.dispatch("pending/loadPendings")
+        }else {
+            this.$store.dispatch("pending/loadDonePendings")
         }
-        else {
-            this.$store.dispatch("ticket/loadDoneTickets")
-        }
-        
     }
 }
 </script>
 <style scoped>
-.filter {
+    .filter {
         font-weight: bold;
         color: darkcyan;
         margin-top: 0.2rem;

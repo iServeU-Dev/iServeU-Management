@@ -17,8 +17,8 @@
                     <div>
                         
                     </div>
-                    <p>Forgot your password? 
-                            <router-link to="/recover">Recover</router-link>
+                    <p>Sign Up
+                            <router-link to="/register">Here</router-link>
                     </p>
                 </div>
             </form>

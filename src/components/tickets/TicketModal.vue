@@ -9,6 +9,10 @@
                 <h3 class="box__header">Βασικές Πληροφορίες</h3>
                 <div class="box__container">
                     <div class="box__container--field">
+                        <label for="email">Πελάτης:</label>
+                        <v-select class="selection" :filter="fuseSearch" :options="customers" label='name' v-model="ticket.customer"></v-select>
+                    </div>
+                    <div class="box__container--field store">
                         <label for="email">Κατάστημα:</label>
                         <v-select class="selection" :options="stores" label='name' v-model="ticket.store"></v-select>
                     </div>
@@ -30,17 +34,32 @@
     </section>
 </template>
 <script>
+import Fuse from "fuse.js";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import ErrorComp from "../shared/ErrorComp.vue";
 export default {
+    data() {
+        return {
+            customer: {}
+        }
+    },
     components: {
         vSelect,
         ErrorComp
     },
     computed: {
+        customers() {
+            return this.$store.getters["customer/customers"]
+        },
         stores() {
-            return this.$store.getters['store/stores'];
+            if(this.ticket.customer === null) {
+                return []
+            }
+            else {
+                return this.ticket.customer.stores;
+            }
+            
         },
         ticket: {
             get() {
@@ -59,6 +78,7 @@ export default {
             const payload = {
                 uid : this.ticket.uid,
                 store : this.ticket.store,
+                customer : this.ticket.customer,
                 user : this.$store.getters["auth/logedInUser"],
                 created : this.ticket.created,
                 description : this.ticket.description,
@@ -84,18 +104,32 @@ export default {
             this.$store.dispatch("ticket/cancelTicket")
             this.$store.commit("auth/setError", null)
             this.$router.push('/ticketing')
-        }
+        },
+        fuseSearch(options, search) {
+        const fuse = new Fuse(options, {
+            keys: ['name', 'phone', 'vat_number'],
+            shouldSort: true,
+            useExtendedSearch: true
+        })
+        return search.length
+            ? fuse.search("'"+search).map(({ item }) => item)
+            : fuse.list
+        },
     }
 }
 </script>
 <style>
-    .problem {
+    .store {
+        margin-top: 1rem;
         grid-row-start: 2;
+    }
+    .problem {
+        grid-row-start: 3;
         margin: 1rem;
         margin-left: 0;
     }
     .solution {
-        grid-row-start: 2;
+        grid-row-start: 3;
         margin: 1rem;
     }
     textarea {
@@ -106,11 +140,11 @@ export default {
     }
 @media only screen and (max-width: 768px) {
     .problem {
-        grid-row-start: 2;
+        grid-row-start: 3;
         margin: 1rem;
     }
     .solution {
-        grid-row-start: 3;
+        grid-row-start: 4;
         margin: 1rem;
     }
     textarea {

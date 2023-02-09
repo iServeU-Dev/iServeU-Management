@@ -85,7 +85,6 @@ export default {
     methods: {
         expand() {
             this.collapse = !this.collapse
-            console.log(this.user)
         },
         editUser(payload) {
             this.$store.dispatch("user/editUser", payload)

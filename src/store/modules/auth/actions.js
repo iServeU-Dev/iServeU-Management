@@ -3,9 +3,11 @@ import router from '@/router'
 
 export default {
     async logIn(context, payload) {
-      console.log(payload)
         var response = await axios.post('auth/login', payload,{
+            mode: 'cors',
             headers: {
+              'Access-Control-Allow-Origin' : '*',
+              'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
               "Content-Type": "application/json"
             }
           }

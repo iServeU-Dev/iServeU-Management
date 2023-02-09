@@ -40,7 +40,16 @@ export default {
                     returned.push(fuseSearch[i].item)
                 }
             }
-            return returned
+            return returned.slice().sort((a,b) => {
+                let fa = a.name.toLowerCase(), fb = b.name.toLowerCase();
+                if (fa < fb) {
+                    return -1
+                }
+                if (fa > fb) {
+                    return 1
+                }
+                return 0
+            })
             
         }
     },
@@ -51,9 +60,6 @@ export default {
     },
     mounted() {
         this.$store.dispatch("customer/loadCustomers")
-        this.$store.dispatch("user/loadUsers")
-        this.$store.dispatch("store/loadStores")
-        this.$store.dispatch("ticket/loadTickets")
     }
 }
 </script>

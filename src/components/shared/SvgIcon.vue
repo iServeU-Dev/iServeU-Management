@@ -100,6 +100,18 @@
       <title>add</title>
       <path d="M18.984 12.984h-6v6h-1.969v-6h-6v-1.969h6v-6h1.969v6h6v1.969z"></path>
     </svg>
+    <svg v-else-if="name === 'filter'" version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+      <title>menu_open</title>
+      <path d="M21 15.609l-1.406 1.406-5.016-5.016 5.016-5.016 1.406 1.406-3.563 3.609zM3 6h12.984v2.016h-12.984v-2.016zM3 12.984v-1.969h9.984v1.969h-9.984zM3 18v-2.016h12.984v2.016h-12.984z"></path>
+    </svg>
+    <svg v-else-if="name === 'active'" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="28" viewBox="0 0 32 28">
+      <title>toggle-on</title>
+      <path d="M0 14c0-5.516 4.484-10 10-10h12c5.516 0 10 4.484 10 10s-4.484 10-10 10h-12c-5.516 0-10-4.484-10-10zM22 22c4.406 0 8-3.594 8-8s-3.594-8-8-8-8 3.594-8 8 3.594 8 8 8z"></path>
+    </svg>
+    <svg v-else-if="name === 'deactive'" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="28" viewBox="0 0 32 28">
+      <title>toggle-off</title>
+      <path d="M18 14c0-4.406-3.594-8-8-8s-8 3.594-8 8 3.594 8 8 8 8-3.594 8-8zM30 14c0-4.406-3.594-8-8-8h-6.031c2.438 1.828 4.031 4.734 4.031 8s-1.594 6.172-4.031 8h6.031c4.406 0 8-3.594 8-8zM32 14c0 5.516-4.484 10-10 10h-12c-5.516 0-10-4.484-10-10s4.484-10 10-10h12c5.516 0 10 4.484 10 10z"></path>
+    </svg>
 </template>
   <script>
     export default {

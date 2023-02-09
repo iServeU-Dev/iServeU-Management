@@ -1,14 +1,15 @@
 <template>
     <div class="ticket">
+        <comfirmation-modal v-if="openCheck == true" :payload="ticket" @saveAction="done" @cancelAction="closeConfimartion"></comfirmation-modal>
         <div class="ticket__header" @click.self="expand">
             <div class="ticket_header--title">
-                <svg-icon v-if="timePast === 1" class="icon icon__success" name="clock"></svg-icon>
+                <svg-icon v-if="timePast === 1 && ticket.deleted === false" class="icon icon__success" name="clock"></svg-icon>
                 <svg-icon v-if="timePast === 2" class="icon icon__warning" name="warning"></svg-icon>
                 <svg-icon v-if="timePast === 3" class="icon icon__danger" name="danger"></svg-icon>
                 <div class="ticket_header--title-head">{{ ticket.store.name }}</div>
             </div>
-            <div class="ticket_header--actions">
-                <button class="ticket_header--actions-btn" @click="done(ticket.uid)">
+            <div class="ticket_header--actions" v-if=" ticket.deleted === false">
+                <button class="ticket_header--actions-btn" @click="openCheckModal()">
                     <svg-icon class="ticket_header--actions-icon success" name="check"></svg-icon>
                 </button>
                 <button class="ticket_header--actions-btn" @click="editTicket(ticket)">
@@ -19,20 +20,20 @@
         <div class="ticket__body" v-if="collapse">
             <div class="ticket__body--info">
                 <div class="ticket__body--info-date ticket__body--entry">
-                    <label for="created">Ημερομηνία:</label>
+                    <label for="created">Άνοιγμα:</label>
                     {{date}}
                 </div>
                 <div class="ticket__body--entry ticket__body--info-user">
                     <label for="">Χρήστης:</label>
                     {{ticket.user.name}}
                 </div>
-                <div class="ticket__body--info-customer ticket__body--entry">
-                    <label for="customer">Customer:</label>
-                    {{ticket.store.customer.name}}
+                <div class="ticket__body--entry ticket__body--info-user" v-if="ticket.closedUser.name != null">
+                    <label for="">Κλείσιμο:</label>
+                    {{closed}}
                 </div>
-                <div class="ticket__body--info-vat ticket__body--entry">
-                    <label for="afm">A.F.M.:</label>
-                    {{ticket.store.customer.vat_number}}
+                <div class="ticket__body--entry ticket__body--info-user" v-if="ticket.closedUser.name != null">
+                    <label for="">Χρήστης:</label>
+                    {{ticket.closedUser.name}}
                 </div>
             </div>
             <div>
@@ -53,6 +54,7 @@
 </template>
 <script>
 import SvgIcon from '../shared/SvgIcon.vue'
+import ComfirmationModal from "../shared/ComfirmationModal.vue";
 export default {
     props: [
         "ticket"
@@ -60,7 +62,9 @@ export default {
     data() {
         return {
             collapse: false,
-            date : this.ticket.created.split("T")[0]
+            date : this.ticket.created.split("T")[0],
+            closed : this.ticket.closed.split("T")[0],
+            openCheck: false,
         }
     },
     computed: {
@@ -80,9 +84,16 @@ export default {
         }
     },
     components: {
-        SvgIcon
+        SvgIcon,
+        ComfirmationModal
     },
     methods: {
+        openCheckModal(){
+            this.openCheck = true
+        },
+        closeConfimartion() {
+            this.openCheck = false
+        },
         expand() {
             this.collapse = !this.collapse
         },
@@ -90,8 +101,8 @@ export default {
             this.$store.dispatch("ticket/editTicket", payload)
             this.$router.push('ticketing/edit')
         },
-        done(payload) {
-            this.$store.dispatch("ticket/deleteTicket", payload)
+        done() {
+            this.$store.dispatch("ticket/deleteTicket", this.ticket.uid)
         }
     }
 }

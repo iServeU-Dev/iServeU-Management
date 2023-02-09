@@ -8,6 +8,7 @@ export  default {
     editTicket(state,payload){
       state.ticket.uid = payload.uid
       state.ticket.user = payload.user,
+      state.ticket.customer = payload.customer,
       state.ticket.store =  payload.store,
       state.ticket.created = payload.created,
       state.ticket.description = payload.description,
@@ -21,11 +22,15 @@ export  default {
     resetTicket(state) {
       state.ticket.uid = ""
       state.ticket.user = null,
+      state.ticket.customer = null,
       state.ticket.store =  null,
       state.ticket.created = "",
       state.ticket.description = "",
       state.ticket.status = 0,
       state.ticket.solution = "",
       state.ticket.closed = false
+    },
+    setDone(state,payload) {
+      state.done = payload
     }
   }

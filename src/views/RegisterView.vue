@@ -87,4 +87,31 @@ export default {
         justify-self: center;
         align-self: center;
     }
+    @media only screen and (max-width: 768px) {
+    .login {
+        height: 100vh;
+        width: 100vw;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+    }
+    .login__body--form {
+        width: auto;
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, auto);
+    }
+    .login__body--name {
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+    .login__body--submit {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        width: 80%;
+        justify-self: center;
+        align-self: center;
+    }
+}
 </style>

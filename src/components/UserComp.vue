@@ -49,10 +49,7 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch("customer/loadCustomers")
         this.$store.dispatch("user/loadUsers")
-        this.$store.dispatch("store/loadStores")
-        this.$store.dispatch("ticket/loadTickets")
     }
 }
 </script>

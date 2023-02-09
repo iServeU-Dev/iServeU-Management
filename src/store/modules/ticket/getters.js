@@ -4,5 +4,8 @@ export  default {
     },
     ticket(state) {
         return state.ticket
+    },
+    done(state) {
+        return state.done
     }
 }

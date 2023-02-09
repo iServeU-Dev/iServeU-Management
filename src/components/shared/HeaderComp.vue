@@ -8,10 +8,10 @@
             </button>
             <h1 class="navbar__title">iServeU Management</h1>
             <nav class="navbar__menu">
-                <button type="button" @click="goTicketing"><svg-icon class="navbar__menu--icon" name="ticket"></svg-icon><span>Ticketing</span></button>
-                <button type="button" @click="goStores"><svg-icon class="navbar__menu--icon" name="store"></svg-icon><span>Stores</span></button>
-                <button type="button" @click="goCustomers"><svg-icon class="navbar__menu--icon" name="customer"></svg-icon><span>Customers</span></button>
-                <button type="button" @click="goUsers"><svg-icon class="navbar__menu--icon" name="user"></svg-icon><span>Users</span></button>
+                <button type="button" @click="goTicketing"><svg-icon class="navbar__menu--icon" name="ticket"></svg-icon><span>Εκκρεμότητες</span></button>
+                <button type="button" @click="goPendings"><svg-icon class="navbar__menu--icon" name="store"></svg-icon><span>Εγκαταστάσεις</span></button>
+                <button type="button" @click="goCustomers"><svg-icon class="navbar__menu--icon" name="customer"></svg-icon><span>Πελάτες</span></button>
+                <button type="button" @click="goUsers"><svg-icon class="navbar__menu--icon" name="user"></svg-icon><span>Χρήστες</span></button>
                 <button type="button" @click="logout"><svg-icon class="navbar__menu--icon" name="logout"></svg-icon><span>Logout</span></button>
             </nav>
         </nav>
@@ -31,10 +31,9 @@ export default {
     methods: {
         toggleMenuOpen() {
             this.open = !this.open
-            console.log(this.open)
         },
-        goStores(){
-            this.$router.push("/stores")
+        goPendings(){
+            this.$router.push("/pendings")
         },
         goUsers(){
             this.$router.push("/users")
